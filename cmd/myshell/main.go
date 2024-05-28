@@ -29,24 +29,19 @@ func main() {
 		input = strings.TrimRight(input, "\n")
 		tokenizedInput := strings.Split(input, " ")
 		cmd := tokenizedInput[0]
+		fn := KnownCommands[cmd]
 
-		if fn, exists := KnownCommands[cmd]; !exists {
-			fmt.Fprintf(os.Stdout, "%v: command not found\n", input)
-		} else {
-			switch fn {
-			case 0:
-				DoExit(tokenizedInput[1:])
-			case 1:
-				DoEcho(tokenizedInput[1:])
-			case 2:
-				DoType(tokenizedInput[1:])
-			default:
-				DoRun(tokenizedInput)
-			}
-
+		switch fn {
+		case 0:
+			DoExit(tokenizedInput[1:])
+		case 1:
+			DoEcho(tokenizedInput[1:])
+		case 2:
+			DoType(tokenizedInput[1:])
+		default:
+			DoRun(tokenizedInput)
 		}
 	}
-
 }
 
 func DoExit(params []string) {
@@ -88,4 +83,5 @@ func DoRun(params []string) {
 			return
 		}
 	}
+	fmt.Fprintf(os.Stdout, "%v: command not found", item)
 }
