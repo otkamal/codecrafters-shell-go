@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -39,6 +40,8 @@ func main() {
 				DoEcho(tokenizedInput[1:])
 			case 2:
 				DoType(tokenizedInput[1:])
+			default:
+				DoRun(tokenizedInput)
 			}
 
 		}
@@ -71,5 +74,18 @@ func DoType(params []string) {
 			}
 		}
 		fmt.Fprintf(os.Stdout, "%v not found\n", item)
+	}
+}
+
+func DoRun(params []string) {
+	item := params[0]
+	env := os.Getenv("PATH")
+	paths := strings.Split(env, ":")
+	for _, path := range paths {
+		executable := path + "/" + item
+		if _, err := os.Stat(executable); err == nil {
+			exec.Command(executable, params[1])
+			return
+		}
 	}
 }
