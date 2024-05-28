@@ -10,7 +10,7 @@ import (
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	// fmt.Println("Logs from your program will appear here!")
-	KnownCommands := map[string]int{"exit": 0}
+	KnownCommands := map[string]int{"exit": 0, "echo": 1}
 
 	for {
 		// Uncomment this block to pass the first stage
@@ -34,7 +34,10 @@ func main() {
 			switch fn {
 			case 0:
 				DoExit(tokenizedInput[1:])
+			case 1:
+				DoEcho(tokenizedInput[1:])
 			}
+
 		}
 	}
 
@@ -42,4 +45,9 @@ func main() {
 
 func DoExit(params []string) {
 	os.Exit(0)
+}
+
+func DoEcho(params []string) {
+	output := strings.Join(params, " ")
+	fmt.Fprintf(os.Stdout, "%v\n", output)
 }
