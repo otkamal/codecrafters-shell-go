@@ -59,8 +59,8 @@ func DoType(params []string) {
 	item := params[0]
 	if _, exists := KnownCommands[item]; exists {
 		class := "builtin"
-		fmt.Fprintf(os.Stdout, "%v is a shell %v", item, class)
+		fmt.Fprintf(os.Stdout, "%v is a shell %v\n", item, class)
 	} else {
-		fmt.Fprintf(os.Stdout, "%v not found", item)
+		fmt.Fprintf(os.Stdout, "%v not found\n", item)
 	}
 }
