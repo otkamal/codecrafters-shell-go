@@ -10,7 +10,7 @@ import (
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	// fmt.Println("Logs from your program will appear here!")
-	KnownCommands := map[string]int{}
+	KnownCommands := map[string]int{"exit": 0}
 
 	for {
 		// Uncomment this block to pass the first stage
@@ -25,10 +25,21 @@ func main() {
 
 		// remove user enter
 		input = strings.TrimRight(input, "\n")
+		tokenizedInput := strings.Split(input, " ")
+		cmd := tokenizedInput[0]
 
-		if _, exists := KnownCommands[input]; !exists {
+		if fn, exists := KnownCommands[cmd]; !exists {
 			fmt.Fprintf(os.Stdout, "%v: command not found\n", input)
+		} else {
+			switch fn {
+			case 0:
+				DoExit(tokenizedInput[1:])
+			}
 		}
 	}
 
+}
+
+func DoExit(params []string) {
+	os.Exit(0)
 }
