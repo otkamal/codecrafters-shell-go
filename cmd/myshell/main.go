@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -20,6 +21,9 @@ func main() {
 		fmt.Println("error: ", err)
 		os.Exit(1)
 	}
+
+	// remove user enter
+	input = strings.TrimRight(input, "\n")
 
 	if _, exists := KnownCommands[input]; !exists {
 		fmt.Fprintf(os.Stdout, "%v: command not found", input)
