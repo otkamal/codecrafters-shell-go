@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var KnownCommands = map[string]int{"exit": 0, "echo": 1, "type": 2}
+var KnownCommands = map[string]int{"exit": 1, "echo": 2, "type": 3}
 
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -30,17 +30,16 @@ func main() {
 		tokenizedInput := strings.Split(input, " ")
 		cmd := tokenizedInput[0]
 		fn := KnownCommands[cmd]
-		fmt.Printf("\n%v\n", cmd)
+
 		switch fn {
-		case 0:
-			DoExit(tokenizedInput[1:])
 		case 1:
-			DoEcho(tokenizedInput[1:])
+			DoExit(tokenizedInput[1:])
 		case 2:
+			DoEcho(tokenizedInput[1:])
+		case 3:
 			DoType(tokenizedInput[1:])
 		default:
 			DoRun(tokenizedInput)
-			fmt.Println("GOT HERE")
 		}
 	}
 }
