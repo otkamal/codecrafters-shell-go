@@ -79,7 +79,7 @@ func DoRun(params []string) {
 		if err != nil {
 			fmt.Println("err: ", err)
 		}
-		fmt.Printf("%v", out)
+		fmt.Printf("%v", string(out))
 		return
 	}
 	fmt.Fprintf(os.Stdout, "%v: command not found\n", item)
