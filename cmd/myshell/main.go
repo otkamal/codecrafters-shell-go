@@ -30,7 +30,7 @@ func main() {
 		tokenizedInput := strings.Split(input, " ")
 		cmd := tokenizedInput[0]
 		fn := KnownCommands[cmd]
-		fmt.Printf("\n%v\n", fn)
+		fmt.Printf("\n%v\n", cmd)
 		switch fn {
 		case 0:
 			DoExit(tokenizedInput[1:])
