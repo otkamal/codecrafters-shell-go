@@ -79,7 +79,11 @@ func DoRun(params []string) {
 	for _, path := range paths {
 		executable := path + "/" + item
 		if _, err := os.Stat(executable); err == nil {
-			exec.Command(executable, params[1])
+			out, err := exec.Command(executable, params[1]).Output()
+			if err != nil {
+				fmt.Println("err: ", err)
+			}
+			fmt.Println(string(out))
 			return
 		}
 	}
