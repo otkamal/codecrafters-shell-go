@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
+var KnownCommands = map[string]int{"exit": 0, "echo": 1, "type": 2}
+
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	// fmt.Println("Logs from your program will appear here!")
-	KnownCommands := map[string]int{"exit": 0, "echo": 1}
 
 	for {
 		// Uncomment this block to pass the first stage
@@ -36,6 +37,8 @@ func main() {
 				DoExit(tokenizedInput[1:])
 			case 1:
 				DoEcho(tokenizedInput[1:])
+			case 2:
+				DoType(tokenizedInput[1:])
 			}
 
 		}
@@ -50,4 +53,14 @@ func DoExit(params []string) {
 func DoEcho(params []string) {
 	output := strings.Join(params, " ")
 	fmt.Fprintf(os.Stdout, "%v\n", output)
+}
+
+func DoType(params []string) {
+	item := params[0]
+	if _, exists := KnownCommands[item]; exists {
+		class := "builtin"
+		fmt.Fprintf(os.Stdout, "%v is a shell %v", item, class)
+	} else {
+		fmt.Fprintf(os.Stdout, "%v not found", item)
+	}
 }
