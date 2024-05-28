@@ -61,6 +61,15 @@ func DoType(params []string) {
 		class := "builtin"
 		fmt.Fprintf(os.Stdout, "%v is a shell %v\n", item, class)
 	} else {
+		env := os.Getenv("PATH")
+		paths := strings.Split(env, ":")
+		for _, path := range paths {
+			exec := path + "/" + item
+			if _, err := os.Stat(exec); err == nil {
+				fmt.Fprintf(os.Stdout, "%v is %v\n", item, exec)
+				return
+			}
+		}
 		fmt.Fprintf(os.Stdout, "%v not found\n", item)
 	}
 }
