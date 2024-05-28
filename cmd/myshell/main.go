@@ -40,6 +40,7 @@ func main() {
 			DoType(tokenizedInput[1:])
 		default:
 			DoRun(tokenizedInput)
+			fmt.Println("GOT HERE")
 		}
 	}
 }
