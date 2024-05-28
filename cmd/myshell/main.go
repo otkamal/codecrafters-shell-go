@@ -74,18 +74,13 @@ func DoType(params []string) {
 
 func DoRun(params []string) {
 	item := params[0]
-	env := os.Getenv("PATH")
-	paths := strings.Split(env, ":")
-	for _, path := range paths {
-		executable := path + "/" + item
-		if _, err := os.Stat(executable); err == nil {
-			out, err := exec.Command(executable, params[1]).Output()
-			if err != nil {
-				fmt.Println("err: ", err)
-			}
-			fmt.Println(string(out))
-			return
+	if _, err := os.Stat(item); err == nil {
+		out, err := exec.Command(item, params[1]).Output()
+		if err != nil {
+			fmt.Println("err: ", err)
 		}
+		fmt.Println(string(out))
+		return
 	}
-	fmt.Fprintf(os.Stdout, "%v: command not found", item)
+	fmt.Fprintf(os.Stdout, "%v: command not found\n", item)
 }
