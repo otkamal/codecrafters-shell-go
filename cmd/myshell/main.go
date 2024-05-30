@@ -28,7 +28,6 @@ func main() {
 		input, err := bufio.NewReader(os.Stdin).ReadString('\n')
 		if err != nil {
 			fmt.Println("error: ", err)
-			os.Exit(1)
 		}
 
 		// remove user enter
@@ -88,7 +87,6 @@ func DoRun(params []string) {
 		out, err := exec.Command(item, params[1]).Output()
 		if err != nil {
 			fmt.Println("err: ", err)
-			os.Exit(1)
 		}
 		fmt.Printf("%v", string(out))
 		return
@@ -100,7 +98,6 @@ func DoPwd(params []string) {
 	currentDirectory, err := os.Getwd()
 	if err != nil {
 		fmt.Println("err: ", err)
-		os.Exit(1)
 	}
 	fmt.Fprintf(os.Stdout, "%v\n", currentDirectory)
 }
