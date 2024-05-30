@@ -8,7 +8,13 @@ import (
 	"strings"
 )
 
-var KnownCommands = map[string]int{"exit": 1, "echo": 2, "type": 3, "pwd": 4}
+var BuiltIns = map[string]int{
+	"exit": 1,
+	"echo": 2,
+	"type": 3,
+	"pwd":  4,
+	"cd":   5,
+}
 
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -29,7 +35,7 @@ func main() {
 		input = strings.TrimRight(input, "\n")
 		tokenizedInput := strings.Split(input, " ")
 		cmd := tokenizedInput[0]
-		fn := KnownCommands[cmd]
+		fn := BuiltIns[cmd]
 
 		switch fn {
 		case 1:
@@ -40,6 +46,8 @@ func main() {
 			DoType(tokenizedInput[1:])
 		case 4:
 			DoPwd(tokenizedInput[1:])
+		case 5:
+			DoCd(tokenizedInput[1:])
 		default:
 			DoRun(tokenizedInput)
 		}
@@ -57,7 +65,7 @@ func DoEcho(params []string) {
 
 func DoType(params []string) {
 	item := params[0]
-	if _, exists := KnownCommands[item]; exists {
+	if _, exists := BuiltIns[item]; exists {
 		class := "builtin"
 		fmt.Fprintf(os.Stdout, "%v is a shell %v\n", item, class)
 	} else {
@@ -93,4 +101,11 @@ func DoPwd(params []string) {
 		fmt.Println("err: ", err)
 	}
 	fmt.Fprintf(os.Stdout, "%v\n", currentDirectory)
+}
+
+func DoCd(params []string) {
+	err := os.Chdir(params[0])
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
+	}
 }
