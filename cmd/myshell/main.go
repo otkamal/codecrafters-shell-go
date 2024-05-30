@@ -88,6 +88,7 @@ func DoRun(params []string) {
 		out, err := exec.Command(item, params[1]).Output()
 		if err != nil {
 			fmt.Println("err: ", err)
+			os.Exit(1)
 		}
 		fmt.Printf("%v", string(out))
 		return
@@ -99,6 +100,7 @@ func DoPwd(params []string) {
 	currentDirectory, err := os.Getwd()
 	if err != nil {
 		fmt.Println("err: ", err)
+		os.Exit(1)
 	}
 	fmt.Fprintf(os.Stdout, "%v\n", currentDirectory)
 }
@@ -114,6 +116,15 @@ func DoCd(params []string) {
 	currentDirectory, _ := os.Getwd()
 	workingPath := strings.Split(currentDirectory, "/")[1:]
 	relativePath := strings.Split(params[0], "/")
+	if params[0] == "~" {
+		homeDir := os.Getenv("HOME")
+		err := os.Chdir(homeDir)
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", homeDir)
+			os.Exit(1)
+		}
+		return
+	}
 	for i, r := range relativePath {
 		switch r {
 		case "..":
@@ -136,5 +147,6 @@ func DoCd(params []string) {
 	err := os.Chdir(finalPath)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
+		os.Exit(1)
 	}
 }
