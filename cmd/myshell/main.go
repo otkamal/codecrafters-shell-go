@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var KnownCommands = map[string]int{"exit": 1, "echo": 2, "type": 3}
+var KnownCommands = map[string]int{"exit": 1, "echo": 2, "type": 3, "pwd": 4}
 
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -38,6 +38,8 @@ func main() {
 			DoEcho(tokenizedInput[1:])
 		case 3:
 			DoType(tokenizedInput[1:])
+		case 4:
+			DoPwd(tokenizedInput[1:])
 		default:
 			DoRun(tokenizedInput)
 		}
@@ -83,4 +85,12 @@ func DoRun(params []string) {
 		return
 	}
 	fmt.Fprintf(os.Stdout, "%v: command not found\n", item)
+}
+
+func DoPwd(params []string) {
+	currentDirectory, err := os.Executable()
+	if err != nil {
+		fmt.Println("err: ", err)
+	}
+	fmt.Fprintf(os.Stdout, "%v\n", currentDirectory)
 }
