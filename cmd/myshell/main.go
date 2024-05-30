@@ -19,10 +19,10 @@ var BuiltIns = map[string]int{
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	// fmt.Println("Logs from your program will appear here!")
+	fmt.Println("GOT HERE")
 
 	for {
 		// Uncomment this block to pass the first stage
-		fmt.Println("GOT HERE")
 		fmt.Fprint(os.Stdout, "$ ")
 
 		// Wait for user input
