@@ -115,9 +115,6 @@ func DoCd(params []string) {
 	workingPath := strings.Split(currentDirectory, "/")[1:]
 	relativePath := strings.Split(params[0], "/")
 	for i, r := range relativePath {
-		// fmt.Printf("%v, %v--\n", i, r)
-		// fmt.Printf("Working: %s\n", strings.Join(workingPath, "/"))
-		// fmt.Printf("Relative: %s\n\n", strings.Join(relativePath, "/"))
 		switch r {
 		case "..":
 			if len(workingPath) >= 1 {
@@ -133,11 +130,9 @@ func DoCd(params []string) {
 		default:
 			workingPath = append(workingPath, r)
 		}
-		//relativePath = relativePath[i+1:]
 	}
 	finalPath := strings.Join(workingPath, "/")
 	finalPath = "/" + finalPath
-	// fmt.Printf("Final Working: \n\n%s\n\n", finalPath)
 	err := os.Chdir(finalPath)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
