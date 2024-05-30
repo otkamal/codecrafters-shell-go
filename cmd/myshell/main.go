@@ -104,6 +104,7 @@ func DoPwd(params []string) {
 }
 
 func DoCd(params []string) {
+	fmt.Printf("%v\n", strings.Split(params[0], "/"))
 	err := os.Chdir(params[0])
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
