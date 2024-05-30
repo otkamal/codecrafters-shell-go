@@ -22,6 +22,7 @@ func main() {
 
 	for {
 		// Uncomment this block to pass the first stage
+		fmt.Println("GOT HERE")
 		fmt.Fprint(os.Stdout, "$ ")
 
 		// Wait for user input
@@ -118,7 +119,6 @@ func DoCd(params []string) {
 		err := os.Chdir(homeDir)
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", homeDir)
-			os.Exit(1)
 		}
 		return
 	}
@@ -144,6 +144,5 @@ func DoCd(params []string) {
 	err := os.Chdir(finalPath)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
-		os.Exit(1)
 	}
 }
