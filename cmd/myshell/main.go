@@ -88,7 +88,7 @@ func DoRun(params []string) {
 }
 
 func DoPwd(params []string) {
-	currentDirectory, err := os.Executable()
+	currentDirectory, err := os.Getwd()
 	if err != nil {
 		fmt.Println("err: ", err)
 	}
