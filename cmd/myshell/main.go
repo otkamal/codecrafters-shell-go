@@ -19,8 +19,6 @@ var BuiltIns = map[string]int{
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	// fmt.Println("Logs from your program will appear here!")
-	fmt.Println("GOT HERE")
-
 	for {
 		// Uncomment this block to pass the first stage
 		fmt.Fprint(os.Stdout, "$ ")
@@ -114,14 +112,6 @@ func DoCd(params []string) {
 	currentDirectory, _ := os.Getwd()
 	workingPath := strings.Split(currentDirectory, "/")[1:]
 	relativePath := strings.Split(params[0], "/")
-	if params[0] == "~" {
-		homeDir := os.Getenv("HOME")
-		err := os.Chdir(homeDir)
-		if err != nil {
-			fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", homeDir)
-		}
-		return
-	}
 	for i, r := range relativePath {
 		switch r {
 		case "..":
@@ -135,6 +125,10 @@ func DoCd(params []string) {
 			}
 			// if we have something like /../""/../ => treat // as / and don't do anything
 			// with the empty value
+		case "~":
+			if i == 0 {
+				workingPath = []string{os.Getenv("HOME")}
+			}
 		default:
 			workingPath = append(workingPath, r)
 		}
