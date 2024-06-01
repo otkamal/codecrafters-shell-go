@@ -137,6 +137,6 @@ func DoCd(params []string) {
 	finalPath = "/" + finalPath
 	err := os.Chdir(finalPath)
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "cd: %v: No such file or directory\n", params[0])
+		fmt.Fprintf(os.Stdout, "%v: No such file or directory\n", params[0])
 	}
 }
